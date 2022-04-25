@@ -1,0 +1,18 @@
+Descripcion: 
+La empresa central + requiere de un sistema (wallet ) donde se gestionen assets digitales, que permita a los usuario depositar, retirar e intercambiar entre los siguientes activos: USD , EUR y BSF.
+
+Resultados esperados: 
+- Creacion de tablas y modelos necesarios para cumplir con las funcionalidades.
+- Validacion de los procesos (en caso de ser necesario).
+- El usuario debe poder reitrar, depositar e intercambiar los activos USD, EUR, BSF.
+- El usuario debe poder visualizar el movimientos de fondos y balance de los mismos.
+- Coleccion en postman descriptiva y organizada de los endpoint a consumir.
+- Aplicacion de mejores practicas para el desarrollo de software.
+
+Tecnologias: 
+- MongoDB
+- Node.js
+- Express
+- Git
+
+El desarrollador deberá crear un repositorio en github público con un branch llamado main. Las actualizaciones de código serán validadas via Pull Request. No se puede enviar nada directo a la rama main
