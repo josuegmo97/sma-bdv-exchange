@@ -1,11 +1,9 @@
+import 'dotenv/config'
 import express from 'express'
 import path from 'path'
 import cors from 'cors'
 import router from './routes/index'
 import db from './settings/db'
-
-// clean consola before start
-console.clear()
 
 const app = express();
 

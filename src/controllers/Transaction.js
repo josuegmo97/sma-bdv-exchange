@@ -106,8 +106,8 @@ const transactionTypeValidate = (type, asset_in = '', asset_out = '', user, amou
             (!initialAssets.find(type => type.name == asset_out)) && throwErr('Invalid Asset');
             (!asset_in) && throwErr('Asset in is required');
             (!initialAssets.find(type => type.name == asset_in)) && throwErr('Invalid Asset');
-            (asset_out == asset_in) && throwErr('Asset cannot be equal')
-                (amount > user.balance[asset_out.toLowerCase()]) && throwErr('Insufficient funds');
+            (asset_out == asset_in) && throwErr('Asset cannot be equal');
+            (amount > user.balance[asset_out.toLowerCase()]) && throwErr('Insufficient funds');
             break;
 
         case 'obtain':
@@ -171,7 +171,7 @@ const setDataTransaction = (transactions) => {
     if (total == 0) {
         return {
             status: 404,
-            data: {msg: 'Not result transaction'}
+            data: { msg: 'Not result transaction' }
         }
     }
 
