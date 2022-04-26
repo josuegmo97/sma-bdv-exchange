@@ -1,17 +1,17 @@
-import { initialUsers } from '../helpers/userHelper'
+import { initialUsers } from '../helpers/helpers'
 import models from '../models/models'
 
-const syncUser = async (req, res, next) => {
+const syncUser = async () => {
 
     for (const user of initialUsers) {
-        await createUser(res, user.name, user.alias,)
+        await createUser(user.name, user.alias,)
     }
 
-    const data = await userList(res)
-    res.json(data)
+    const data = await userList()
+    return (data)
 }
 
-const createUser = async (res, name, alias) => {
+const createUser = async (name, alias) => {
 
     try {
         const query = await models.User.findOne({ alias })
@@ -21,9 +21,9 @@ const createUser = async (res, name, alias) => {
         }
         return
     } catch (e) {
-        throw res.status(500).send({
+        throw {
             message: 'Error in the proccess'
-        })
+        }
     }
 
 }
@@ -34,9 +34,9 @@ const userList = async () => {
         const data = await models.User.find()
         return data
     } catch (error) {
-        throw res.status(500).send({
+        throw {
             message: 'Error in the proccess'
-        })
+        }
     }
 
 }
