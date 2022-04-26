@@ -1,9 +1,9 @@
 import routerX from 'express-promise-router'
-import User from './user'
+import Transaction from './transaction'
 
 const router = routerX()
 
-router.use('/user', User)
+router.use('/transaction', Transaction)
 
 
 export default router

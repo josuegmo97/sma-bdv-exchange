@@ -9,7 +9,7 @@ const UserSchema = new Schema({
         eur: { type: Number, default: 0 },
     },
     createdAt: { type: Date, default: Date.now }
-})
+}, { versionKey: false })
 
 const User = model('userschema', UserSchema)
 
