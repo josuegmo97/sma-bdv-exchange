@@ -4,6 +4,9 @@ import cors from 'cors'
 import router from './routes/index'
 import db from './settings/db'
 
+// clean consola before start
+console.clear()
+
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
