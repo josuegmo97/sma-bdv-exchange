@@ -11,12 +11,12 @@ mongoose.connect(database, {
     .then(() => {
         console.log("DB is connect")
 
-        // User.syncUser()
-        //     .then((data) => console.log('Users load successfull'))
-        //     .catch(err => console.log(err))
+        User.syncUser()
+            .then((data) => console.log('Users load successfull'))
+            .catch(err => console.log(err))
 
-        // Asset.syncAsset()
-        //     .then((data) => console.log('Assets load successfull'))
-        //     .catch(err => console.log(err))
+        Asset.syncAsset()
+            .then((data) => console.log('Assets load successfull'))
+            .catch(err => console.log(err))
     })
     .catch(err => console.log(err))

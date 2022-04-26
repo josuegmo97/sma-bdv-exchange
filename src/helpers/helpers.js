@@ -7,11 +7,11 @@ export const initialUsers = [
 ]
 
 export const initialAssets = [
-    { name: 'USD', rate: 1 },
-    { name: 'BSF', rate: 5 },
-    { name: 'EUR', rate: 1 }
+    { name: 'USD', rate_ves: 4.4 },
+    { name: 'BSF', rate_ves: 6 },
+    { name: 'EUR', rate_ves: 5.3 }
 ]
 
 export const transactionsTypes = ['withdrawal', 'exchange', 'obtain']
 
-export const throwErr = (msg, status = 404) => { throw JSON.stringify({ err: true, msg, status }) }
+export const throwErr = (msg, status = 404) => { throw  {err: true, msg, status } }
