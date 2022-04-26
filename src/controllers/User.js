@@ -71,10 +71,10 @@ const updateBalance = async (type, user, amount, aIn, aOut) => {
                 break;
 
             case 'exchange':
-                const exch = await userExchange(amount, aIn)
+                const exch = await userExchange(amount, aIn, aOut)
                 const receive = parseFloat(Number(exch.receive).toFixed(2))
                 user.balance[aOut.toLowerCase()] = (user.balance[aOut.toLowerCase()] - amount).toFixed(2);
-                user.balance[aIn.toLowerCase()] =  (user.balance[aIn.toLowerCase()] + receive).toFixed(2);
+                user.balance[aIn.toLowerCase()] = (user.balance[aIn.toLowerCase()] + receive).toFixed(2);
                 break;
 
             case 'obtain':
@@ -91,15 +91,19 @@ const updateBalance = async (type, user, amount, aIn, aOut) => {
 }
 
 
-const userExchange = async (amount, aIn) => {
+const userExchange = async (amount, aIn, aOut) => {
 
     const _in = await AssetController.searchAsset(aIn);
+    const _out = await AssetController.searchAsset(aOut);
+
     let amount_receive = 0
 
-    if (aIn != 'BSF') {
-        amount_receive = (amount / _in.rate_ves)
-    } else {
+    if (aIn != 'BSF' && aOut != 'BSF') {
+        amount_receive = (amount * _out.rate_ves) / _in.rate_ves
+    } else if (aIn == 'BSF') {
         amount_receive = (amount * _in.rate_ves)
+    } else {
+        amount_receive = (amount / _in.rate_ves)
     }
 
     return {
