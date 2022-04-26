@@ -4,7 +4,7 @@ import TraController from '../controllers/Transaction'
 const app = routerx();
 
 // get
-app.get('/', TraController.getUserTransaction)
+app.get('/:alias', TraController.getUserTransaction)
 
 // post
 app.post('/', TraController.createTransaction)

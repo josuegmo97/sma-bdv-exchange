@@ -5,10 +5,23 @@ import UserController from './User'
 // all transaction of user
 const getUserTransaction = async (req, res) => {
 
-    try {
-        const data = await models.Transaction.find().populate('user', { name: 2, alias: 1 }).sort({ 'createdAt': -1 })
+    let alias = req.params.alias
 
-        res.json(data)
+    try {
+        const query = await models.Transaction.find()
+            .populate({
+                path: 'user',
+                match: {
+                    alias
+                },
+                select: 'alias -_id name'
+
+            })
+            .sort({ 'createdAt': -1 })
+
+        const { data, status } = setDataTransaction(query)
+
+        res.status(status).json(data)
     } catch (error) {
         return res.status(500).send(error)
     }
@@ -24,7 +37,7 @@ const createTransaction = async (req, res) => {
         const { type_transaction, amount } = req.body;
 
         await UserController.updateBalance(
-            type_transaction, 
+            type_transaction,
             user,
             parseFloat(amount),
             assets.aIn,
@@ -42,8 +55,8 @@ const createTransaction = async (req, res) => {
         res.json(transaction)
 
     } catch (e) {
-        console.log({e})
-        res.status(e.status || 500).json({ 
+        console.log({ e })
+        res.status(e.status || 500).json({
             success: false,
             msg: e.msg || 'error al crear transaccion'
         })
@@ -110,6 +123,75 @@ const transactionTypeValidate = (type, asset_in = '', asset_out = '', user, amou
     return {
         aOut: asset_out, aIn: asset_in
     }
+}
+
+const setDataTransaction = (transactions) => {
+
+    let trans_exchange = 0;
+    let trans_obtain = 0;
+    let trans_withdrawal = 0;
+    let t_e = []
+    let t_o = []
+    let t_w = []
+    let data_ref = {}
+    let user = ''
+
+    transactions.forEach(t => {
+        // Transaction token fake :v
+        if (t.user) {
+
+            if (user == '') user = t.user.name;
+
+            data_ref = {
+                asset_in: t.asset_in,
+                asset_out: t.asset_out,
+                amount: t.amount,
+                createdAt: t.createdAt
+            }
+
+            if (t.type_transaction == 'exchange') {
+                trans_exchange++
+                t_e.push(data_ref)
+            }
+
+            if (t.type_transaction == 'obtain') {
+                trans_obtain++
+                t_o.push(data_ref)
+            }
+
+            if (t.type_transaction == 'withdrawal') {
+                trans_withdrawal++
+                t_w.push(data_ref)
+            }
+        }
+    });
+
+    let total = trans_exchange + trans_obtain + trans_withdrawal
+
+    if (total == 0) {
+        return {
+            status: 404,
+            data: {msg: 'Not result transaction'}
+        }
+    }
+
+    return {
+        status: 200,
+        data: {
+            'user': user,
+            'total_trans': total,
+            'trans_exchange': trans_exchange,
+            'trans_obtain': trans_obtain,
+            'trans_withdrawal': trans_withdrawal,
+            'transactions': {
+                'withdrawal': t_w,
+                'obtain': t_o,
+                'exchange': t_e,
+            }
+        }
+    }
+
+
 }
 
 
