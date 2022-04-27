@@ -101,7 +101,7 @@ const userExchange = async (amount, aIn, aOut) => {
     if (aIn != 'BSF' && aOut != 'BSF') {
         amount_receive = (amount * _out.rate_ves) / _in.rate_ves
     } else if (aIn == 'BSF') {
-        amount_receive = (amount * _in.rate_ves)
+        amount_receive = (amount * _out.rate_ves)
     } else {
         amount_receive = (amount / _in.rate_ves)
     }
